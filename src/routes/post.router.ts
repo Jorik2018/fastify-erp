@@ -5,9 +5,11 @@ import { checkValidRequest, checkValidUser } from '../helpers/auth'
 
 async function postRouter(fastify: FastifyInstance) {
     fastify.decorateRequest('authUser', '')
+    //fastify.addHook('preHandler', checkValidRequest)
+    //fastify.addHook('preHandler', checkValidUser)
     fastify.route({
         method: 'POST',
-        url: '/create',
+        url: '',
         schema: createPostSchema,
         preHandler: [checkValidRequest, checkValidUser],
         handler: controllers.createPost

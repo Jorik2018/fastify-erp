@@ -16,8 +16,7 @@ This uses [Postgres database](https://www.postgresql.org/).
 To set up your database, run:
 
 ```sh
-npm run prisma:save
-npm run prisma:dep
+pnpm run prisma migrate dev
 ```
 
 ### 3. Generate Prisma Client (type-safe database client)

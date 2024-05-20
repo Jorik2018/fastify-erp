@@ -10,6 +10,7 @@
         "incremental": true,
         "noImplicitAny": false,
         "moduleResolution": "node",
+        "strictNullChecks": true,
         "sourceMap": true,
         "outDir": "build",
         "baseUrl": "src",

@@ -2,7 +2,7 @@ import { FastifyReply } from 'fastify'
 import { IUserRequest } from '../interfaces'
 import { prisma } from '../helpers/utils'
 import { ERRORS, handleServerError } from '../helpers/errors'
-import * as JWT from 'jsonwebtoken'
+import { sign } from 'jsonwebtoken'
 import { utils } from '../helpers/utils'
 import { ERROR500, ERROR400, STANDARD } from '../helpers/constants'
 
@@ -13,16 +13,16 @@ export const login = async (request: IUserRequest, reply: FastifyReply) => {
     if (!user) {
       reply.code(ERROR400.statusCode).send(ERRORS.userNotExists)
     }
-    const checkPass = await utils.compareHash(password, user.password)
+    const checkPass = await utils.compareHash(password, user!.password)
     if (!checkPass) {
       reply.code(ERROR400.statusCode).send(ERRORS.userCredError)
     }
-    const token = JWT.sign(
+    const token = sign(
       {
-        id: user.id,
-        email: user.email,
+        id: user!.id,
+        email: user!.email,
       },
-      process.env.APP_JWT_SECRET,
+      process.env.APP_JWT_SECRET!,
     )
     reply.code(STANDARD.SUCCESS).send({
       token,
@@ -49,19 +49,20 @@ export const signUp = async (request: IUserRequest, reply: FastifyReply) => {
         password: String(hashPass),
       },
     })
-    const token = JWT.sign(
+    const token = sign(
       {
         id: createUser.id,
         email: createUser.email,
       },
-      process.env.APP_JWT_SECRET,
+      process.env.APP_JWT_SECRET!,
     )
-    delete createUser.password
+    delete (createUser as any).password
     reply.code(STANDARD.SUCCESS).send({
       token,
       user: createUser,
     })
   } catch (err) {
+    console.log(err)
     handleServerError(reply, err)
   }
 }

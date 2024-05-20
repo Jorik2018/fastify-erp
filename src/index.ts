@@ -4,6 +4,7 @@ import pino from 'pino';
 import userRouter from './routes/user.router'
 import postRouter from './routes/post.router';
 import loadConfig from './config'
+
 loadConfig()
 
 const port = process.env.API_PORT || 5000;
@@ -13,9 +14,9 @@ const startServer = async () => {
     const server = fastify({
       logger: pino({ level: 'info' }),
     })
-    server.register(require('fastify-formbody'))
-    server.register(require('fastify-cors'))
-    server.register(require('fastify-helmet'))
+    server.register(require('@fastify/formbody'))
+    server.register(require('@fastify/cors'))
+    server.register(require('@fastify/helmet'))
     server.register(userRouter, { prefix: '/api/user' })
     server.register(postRouter, { prefix: '/api/post' })
     server.setErrorHandler((error, request, reply) => {
@@ -42,7 +43,7 @@ const startServer = async () => {
         )
       }
     }
-    await server.listen(port)
+    await server.listen({port:port as number})
   } catch (e) {
     console.error(e)
   }

@@ -28,8 +28,8 @@ export default function loadConfig(): void {
         S.string().enum(['development', 'testing', 'production']).required(),
       )
       .prop('API_HOST', S.string().required())
-      .prop('API_PORT', S.string().required())
+      .prop('API_PORT', S.number().required())
       .prop('DATABASE_URL', S.string().required())
-      .prop('APP_JWT_SECRET', S.string().required()),
+      .prop('APP_JWT_SECRET', S.string().required()) as any,
   })
 }
