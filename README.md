@@ -46,3 +46,29 @@ npm run build
 ## Prisma documentation
 - Check out the [Prisma docs](https://www.prisma.io/docs/)
 - Check out the [Fastify docs](https://www.fastify.io/docs/latest/)
+
+
+# Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
+This project was bootstrapped with Fastify-CLI.
+
+## Available Scripts
+ npx fastify generate fastify-erp --lang=ts 
+In the project directory, you can run:
+
+### `npm run dev`
+
+To start the app in dev mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### `npm start`
+
+For production mode
+
+### `npm run test`
+
+Run the test cases.
+
+## Learn More
+
+To learn Fastify, check out the [Fastify documentation](https://fastify.dev/docs/latest/).
+
