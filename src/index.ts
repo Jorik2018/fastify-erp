@@ -4,6 +4,7 @@ import closeWithGrace from "close-with-grace";
 import pino from 'pino';
 import userRouter from './routes/user.router'
 import postRouter from './routes/post.router';
+import itemRouter from './routes/item.router';
 import loadConfig from './config'
 
 loadConfig()
@@ -20,6 +21,7 @@ const startServer = () => {
   server.register(require('@fastify/helmet'))
   server.register(userRouter, { prefix: '/api/user' })
   server.register(postRouter, { prefix: '/api/post' })
+  server.register(itemRouter, { prefix: '/api/item' })
 
   const closeListeners = closeWithGrace({ delay: parseInt(process.env.FASTIFY_CLOSE_GRACE_DELAY!) || 500 }, async function ({ signal, err, manual }) {
     if (err) {
@@ -40,7 +42,7 @@ const startServer = () => {
   server.get('/', (request, reply) => {
     reply.send({ name: 'fastify-typescript' })
   })
-  
+
   server.get('/health-check', async (request, reply) => {
     try {
       await utils.healthCheck()
@@ -49,7 +51,7 @@ const startServer = () => {
       reply.status(500).send()
     }
   })
-  
+
   if (process.env.NODE_ENV === 'production') {
     for (const signal of ['SIGINT', 'SIGTERM']) {
       process.on(signal, () =>
@@ -60,7 +62,7 @@ const startServer = () => {
       )
     }
   }
-  
+
   return server.listen({ port: port as number })
     .then(() => {
       console.log('addresses', server.addresses())
